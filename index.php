@@ -11,12 +11,12 @@
     <title>Apizee - Box tutorials</title>
   </head>
   <body>
-  <?php include './menu.php'; ?>
+  <?php include './include/menu.php'; ?>
 
   <div class="container">
         <h1>Box - tutorials</h1>
         <h2>Contact Box</h2>
-        <?php include './site-key-form.php'; ?>
+        <?php include './include/site-key-form.php'; ?>
         <?php
         if(!empty($_GET['siteKey'])){
         ?>

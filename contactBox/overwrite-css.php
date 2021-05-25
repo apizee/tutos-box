@@ -23,10 +23,10 @@
         </style>
     </head>
     <body>
-        <?php include '../menu.php'; ?>
+    <?php include './../include/menu.php'; ?>
         <div class="container">
             <h1>Overwrite CSS - tutorial</h1>
-            <?php include './../site-key-form.php'; ?>
+            <?php include './../include/site-key-form.php'; ?>
             <?php
             if(!empty($_GET['siteKey'])){
             ?>
