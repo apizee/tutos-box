@@ -1,0 +1,7 @@
+body nav.navbar-dark.bg-dark {
+	background: black !important;
+}
+body nav.navbar-dark.bg-dark img {
+	min-width: 250px;
+	height: 38px;
+}
