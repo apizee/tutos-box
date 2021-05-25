@@ -11,6 +11,7 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <meta name="robots" content="noindex, nofollow">
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -32,10 +33,10 @@
             ?>
                 <div class="card">
                     <div class="card-body">
-                        This is some text within a card body.
+                        Add your custom visitor data object to your contactbox loader
                     </div>
                 </div>
-                <div class="row">
+                <div class="row sample">
                     <div class="col">
                         <form method="POST">
                             <div class="form-group">

@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
+    <meta name="robots" content="noindex, nofollow">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css" >
@@ -26,7 +27,6 @@
                     <small>21/05/2021</small>
                 </div>
                 <p class="mb-1">See custom informations on agent side.</p>
-                <small>Donec id elit non mi porta.</small>
             </a>
             <a href="./contactBox/overwrite-css.php?siteKey=<?=$_GET['siteKey']?>" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
@@ -34,7 +34,20 @@
                     <small>21/05/2021</small>
                 </div>
                 <p class="mb-1">Customize background chatbox color.</p>
-                <small>Donec id elit non mi porta.</small>
+            </a>
+            <a href="./contactBox/click-to-call.php?siteKey=<?=$_GET['siteKey']?>" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Click to Call</h5>
+                    <small>22/05/2021</small>
+                </div>
+                <p class="mb-1">Customize background chatbox color.</p>
+            </a>
+            <a href="./contactBox/first-message-auto.php?siteKey=<?=$_GET['siteKey']?>" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">First message</h5>
+                    <small>22/05/2021</small>
+                </div>
+                <p class="mb-1">Customize your automatic first message.</p>
             </a>
         </div>
         <?php

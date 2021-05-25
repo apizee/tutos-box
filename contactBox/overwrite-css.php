@@ -11,6 +11,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css" >
@@ -31,7 +32,7 @@
             ?>
                 <div class="card">
                     <div class="card-body">
-                        This is some text within a card body.
+                        Minimal CSS class to overwrite for box customisation
                     </div>
                 </div>
                 <div class="row">

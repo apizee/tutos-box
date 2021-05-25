@@ -9,6 +9,7 @@
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
+        <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css" >
@@ -29,7 +30,7 @@
             ?>
                 <div class="card">
                     <div class="card-body">
-                        This is some text within a card body.
+                        A sample to show a call button on your site. Box hide before call start.
                     </div>
                 </div>
                 <div class="row">

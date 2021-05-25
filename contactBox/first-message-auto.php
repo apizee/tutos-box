@@ -13,6 +13,7 @@
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
+        <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css" >
@@ -21,23 +22,16 @@
         <title>Apizee - Custom Visitor Data</title>
     </head>
     <body>
-        <nav class="navbar navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="https://doc.apizee.com/">
-                    <img src="https://doc.apizee.com/wp-content/uploads/2018/03/apizee_help_center_60px.png" alt="Apizee" style="min-width:250px;height:38px;"/>
-                </a>
-            </div>
-        </nav>
         <?php include '../menu.php'; ?>
         <div class="container">
-            <h1>Custom Visitor Data - tutorial</h1>
+            <h1>First message auto - tutorial</h1>
             <?php include './../site-key-form.php'; ?>
             <?php
             if(!empty($_GET['siteKey'])){
             ?>
                 <div class="card">
                     <div class="card-body">
-                    You need to configure your site to open box automatically
+                    You need to configure your site to open box automatically. Add following option to your loader to make it work.
                     </div>
                 </div>
 
