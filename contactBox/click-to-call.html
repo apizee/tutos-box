@@ -1,9 +1,4 @@
-<?php
-    $boxDomain = "//cloud.apizee.com/";
-    if(isset($_GET['domain'])){
-        $boxDomain = "//".$_GET['domain']."/";
-    }
-?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -15,19 +10,20 @@
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css" >
         <link rel="stylesheet" href="../assets/css/doc.css" >
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <title>Apizee - Overwrite CSS</title>
+        <title>Apizee - Click to call</title>
         <style>
         #comBoxAll{display:none;}
         </style>
     </head>
     <body>
-        <?php include '../include/menu.php'; ?>
+    <div id="menu"></div>
         <div class="container">
             <h1>Click to Call - tutorial</h1>
-            <?php include './../include/site-key-form.php'; ?>
-            <?php
-            if(!empty($_GET['siteKey'])){
-            ?>
+            <div class="noSiteKeyMandatory alert alert-primary" role="alert">
+				Enter your site key to make it work
+			</div>
+            <div id="siteKeyForm"></div>
+
                 <div class="card">
                     <div class="card-body">
                         A sample to show a call button on your site. Box hide before call start.
@@ -46,8 +42,10 @@
                     <div class="col">
                         <form method="POST">
                             <div class="form-group">
-                                <label for="customVisitorData">Example</label>
-                                <pre><code>&lt;style&gt;</code><br /><code>#comBoxAll{display:none}</code><br /><code>&lt;/style&gt;</code><br /><code>&lt;script&gt;</code><code>const buttonId= 'call-button';\n const clickButton = document.getElementById(buttonId);
+                                <label for="customVisitorData">Code</label>
+                                <pre><code>&lt;style&gt;</code><br /><code>#comBoxAll{display:none}</code><br /><code>&lt;/style&gt;</code><br /><code>&lt;script&gt;</code><code>
+const buttonId= 'call-button';
+const clickButton = document.getElementById(buttonId);
 //callback from box
 const applicationCallback = function(contactBox, type, params) {
     switch (type) {
@@ -92,16 +90,18 @@ const closeBox = ()=>{
 clickButton.onclick = call;
 
 // load box
-loaderIzeeChat("<?= $_GET['siteKey'] ?>",customParam);</code><br/><code>&lt;script&gt;</code></pre>
+</code><code id="loaderCode">
+loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;script&gt;</code></pre>
                             </div>
                         </form>
                     </div>
                 </div>
                 <script>
                 $(document).ready(function($){
+					    const siteKey = _get('siteKey')!==undefined && _get('siteKey')!=='undefined'?_get('siteKey'):'YOUR_SITE_KEY';
                         const buttonId= 'call-button';
                         const clickButton = document.getElementById(buttonId);
-
+                        $("#loaderCode").html('loaderIzeeChat("'+siteKey+'",customParam);')
                         //callback from box
                         const applicationCallback = function(contactBox, type, params) {
                             switch (type) {
@@ -146,18 +146,16 @@ loaderIzeeChat("<?= $_GET['siteKey'] ?>",customParam);</code><br/><code>&lt;scri
 
                         //link call button to call function
                         clickButton.onclick = call;
-                        customParam.serverDomainRoot = "<?=$boxDomain?>";
                         // load box
-                        loaderIzeeChat("<?= $_GET['siteKey'] ?>",customParam);
+                        loaderIzeeChat(siteKey,customParam);
                     });
                 </script>
-            <?php
-                }
-            ?>
+
         </div>
         <script type="text/javascript" src="https://cloud.apizee.com/contactBox/loaderIzeeChat.js"></script>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="../assets/js/bootstrap.min.js"></script>
+        <script src="../assets/js/tuto.js"></script>
     </body>
 </html>

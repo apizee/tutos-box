@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="robots" content="noindex, nofollow" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../assets/css/doc.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<title>Apizee - Overwrite CSS</title>
+		<style id="styleHead">
+			#comBoxAll .comBoxBanner {
+				background: #333333 !important;
+			}
+			#comBoxAll .comBox {
+				border-color: #333333 !important;
+			}
+			#comBoxAll .comBox .comBoxHeader {
+				background: #333333 !important;
+			}
+			#comBoxAll .comBox .comBoxHeaderClose {
+				background: #333333 !important;
+			}
+			#comBoxAll .comBox .comBoxSendMessage {
+				background-color: #333333 !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="menu"></div>
+		<div class="container">
+			<h1>Overwrite CSS - tutorial</h1>
+			<div class="noSiteKeyMandatory alert alert-primary" role="alert">
+				Enter your site key to make it work
+			</div>
+			<div id="siteKeyForm"></div>
+			<div class="card">
+				<div class="card-body">
+					Minimal CSS class to overwrite for box customisation
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<form method="GET">
+						<input type="hidden" name="siteKey" id="siteKey" />
+						<div class="form-group siteKeyMandatory">
+							<label for="color">Background Color Code</label>
+							<div class="input-group mb-3">
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Color key"
+									aria-label="Color key"
+									id="color"
+									name="color"
+									value="#333333"
+								/>
+								<div class="input-group-append">
+									<input
+										class="btn btn-outline-success"
+										type="button"
+										id="apply"
+										value="Apply"
+									/>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<form method="POST">
+						<div class="form-group">
+							<label for="customVisitorData">Example</label>
+							<pre><code>&lt;style&gt;</code><br /><code id="code"></code><code>&lt;/style&gt;</code></pre>
+						</div>
+					</form>
+				</div>
+			</div>
+			<script>
+				$(document).ready(function($) {
+					const siteKey =
+						_get('siteKey') !== undefined && _get('siteKey') !== 'undefined'
+							? _get('siteKey')
+							: '';
+					loaderIzeeChat(siteKey);
+					var css =
+						'#comBoxAll .comBoxBanner{ background: blue !important;}\n#comBoxAll .comBox{ border-color: blue !important;}\n#comBoxAll .comBox .comBoxHeader{ background: blue !important;}\n#comBoxAll .comBox .comBoxHeaderClose{ background:blue !important;}\n#comBoxAll .comBox .comBoxSendMessage { background-color:blue !important;}\n';
+					var modifyCss = css;
+					$('#code').html(modifyCss.replaceAll('blue', $('#color').val())),
+						$('#apply').click(function() {
+							modifyCss = css;
+							const finalCSS = modifyCss.replaceAll('blue', $('#color').val());
+							$('#styleHead').html(finalCSS);
+							$('#code').html(finalCSS);
+						});
+				});
+			</script>
+		</div>
+		<script
+			type="text/javascript"
+			src="https://cloud.apizee.com/contactBox/loaderIzeeChat.js"
+		></script>
+
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/js/tuto.js"></script>
+	</body>
+</html>
