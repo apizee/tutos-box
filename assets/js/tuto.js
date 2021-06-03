@@ -13,7 +13,7 @@ const addMenu = () => {
 	const menu =
 		'<nav class="navbar navbar-dark bg-dark">' +
 		'<div class="container">' +
-		'<a class="navbar-brand" href="https://doc.apizee.com/">' +
+		'<a class="navbar-brand" href="https://doc.apizee.com/" target="blank">' +
 		'<img src="https://doc.apizee.com/wp-content/uploads/2018/03/apizee_help_center_60px.png" alt="Apizee" style="min-width:250px;height:38px;"/>' +
 		'</a>' +
 		'<a class="btn btn-primary addSiteKeyToLink" href="../index.html">Tutorials</a>' +
