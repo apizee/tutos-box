@@ -10,9 +10,13 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<title>Apizee - Simple integration</title>
 		<style>
-			body {
+			body,
+			html {
 				background-repeat: no-repeat;
 				background-size: cover;
+				position: absolute;
+				width: 100%;
+				height: 100%;
 			}
 			.showOnBackground {
 				display: none;
@@ -90,7 +94,7 @@
 							: '';
 					const textCode = 'loaderIzeeChat("' + siteKey + '");';
 					$('#code').text(textCode);
-					loaderIzeeChat(siteKey);
+					loaderIzeeChat(siteKey, { useFrame: false });
 					$('#hideForm').click(function() {
 						$('.hideOnBackground').hide();
 						$('.showOnBackground').show();
