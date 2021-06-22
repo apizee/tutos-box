@@ -1,0 +1,161 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="robots" content="noindex, nofollow">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" >
+        <link rel="stylesheet" href="../assets/css/doc.css" >
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <title>Apizee - Click to chat</title>
+        <style>
+        #comBoxAll{display:none;}
+        </style>
+    </head>
+    <body>
+    <div id="menu"></div>
+        <div class="container">
+            <h1>Click to Call - tutorial</h1>
+            <div class="noSiteKeyMandatory alert alert-primary" role="alert">
+				Enter your site key to make it work
+			</div>
+            <div id="siteKeyForm"></div>
+
+                <div class="card">
+                    <div class="card-body">
+                        A sample to show a call button on your site. Box hide before call start.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <form method="POST">
+                        <div class="form-group">
+                            <button class="btn btn-call" id="chat-button" disabled="disabled">CHAT</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <form method="POST">
+                            <div class="form-group">
+                                <label for="customVisitorData">Code</label>
+                                <pre><code>&lt;style&gt;</code><br /><code>#comBoxAll{display:none}</code><br /><code>&lt;/style&gt;</code><br /><code>&lt;script&gt;</code><code>
+const buttonId= 'chat-button';
+const clickButton = document.getElementById(buttonId);
+//callback from box
+const applicationCallback = function(contactBox, type, params) {
+    switch (type) {
+        case 'init':
+            console.info('[ComBox] init', params);
+        break;
+        case 'newAgentSelected':
+            clickButton.removeAttribute('disabled');
+        break;
+        case 'noAgentAvailable':
+            clickButton.setAttribute('disabled',false);
+        break;
+    }
+};
+
+// box loader params
+    const customParam = {
+        applicationCallback:applicationCallback
+};
+
+//video call function
+const chat = () =>{
+    let contactBox = Apizee.getContactBox();
+    let box = Apizee.getComBox();
+    if(box && contactBox){
+        document.getElementById('comBoxAll').style.display='block';
+        box.openBox(contactBox.publishedAgentId);
+    }
+}
+
+// close/ hide box
+const closeBox = ()=>{
+    let contactBox = Apizee.getContactBox();
+    let box = Apizee.getComBox();
+    if(box && contactBox){
+        document.getElementById('comBoxAll').style.display='none';
+        box.close(contactBox.publishedAgentId);
+}
+};
+
+//link chat button to chat function
+clickButton.onclick = chat;
+
+// load box
+</code><code id="loaderCode">
+loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;script&gt;</code></pre>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <script>
+                $(document).ready(function($){
+					    const siteKey = _get('siteKey')!==undefined && _get('siteKey')!=='undefined'?_get('siteKey'):'YOUR_SITE_KEY';
+                        const buttonId= 'chat-button';
+                        const clickButton = document.getElementById(buttonId);
+                        $("#loaderCode").html('loaderIzeeChat("'+siteKey+'",customParam);')
+                        //callback from box
+                        const applicationCallback = function(contactBox, type, params) {
+                            switch (type) {
+                                case 'init':
+                                    console.info('[ComBox] init', params);
+
+                                    break;
+                                case 'newAgentSelected':
+                                    clickButton.removeAttribute('disabled');
+                                    break;
+                                case 'noAgentAvailable':
+                                    clickButton.setAttribute('disabled',false);
+                                    break;
+                            }
+                        };
+
+                        // box loader params
+                        const customParam = {
+                        applicationCallback:applicationCallback
+                        };
+
+                        //chat function
+                        const chat = () =>{
+                            let contactBox = Apizee.getContactBox();
+                            let box = Apizee.getComBox();
+
+                            if(box && contactBox){
+                                document.getElementById('comBoxAll').style.display='block';
+                                box.openBox(contactBox.publishedAgentId);
+                            }
+                        }
+
+                        // close/ hide box
+                        const closeBox = ()=>{
+                            let contactBox = Apizee.getContactBox();
+                            let box = Apizee.getComBox();
+                            if(box && contactBox){
+                                document.getElementById('comBoxAll').style.display='none';
+                                box.close(contactBox.publishedAgentId);
+                            }
+                        };
+
+                        //link call button to call function
+                        clickButton.onclick = chat;
+                        // load box
+                        loaderIzeeChat(siteKey,customParam);
+                    });
+                </script>
+
+        </div>
+        <script type="text/javascript" src="https://cloud.apizee.com/contactBox/loaderIzeeChat.js"></script>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <script src="../assets/js/tuto.js"></script>
+    </body>
+</html>
