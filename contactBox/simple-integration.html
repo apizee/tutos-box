@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="robots" content="noindex, nofollow" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../assets/css/doc.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<title>Apizee - Simple integration</title>
+		<style>
+			body {
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.showOnBackground {
+				display: none;
+			}
+		</style>
+	</head>
+	<body id="body">
+		<div id="menu" class="hideOnBackground"></div>
+		<button id="showForm" class="showOnBackground btn btn-primary">Show Form</button>
+		<div class="container hideOnBackground" id="applyBg">
+			<h1>Simple integration - tutorial</h1>
+			<div class="noSiteKeyMandatory alert alert-primary" role="alert">
+				Enter your site key to make it work
+			</div>
+			<div id="siteKeyForm"></div>
+			<div class="card">
+				<div class="card-body">
+					Simple box integration
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<form method="GET">
+						<input type="hidden" name="siteKey" id="siteKey" />
+						<div class="form-group siteKeyMandatory">
+							<label for="color">Background</label>
+							<div class="input-group mb-3">
+								<input
+									type="file"
+									class="form-control"
+									placeholder="Background"
+									aria-label="Background image"
+									id="background"
+									name="background"
+									value=""
+								/>
+								<div class="input-group-append">
+									<input
+										class="btn btn-outline-success"
+										type="button"
+										id="apply"
+										value="Apply"
+									/>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="form-group">
+						<label for="customVisitorData">Example</label>
+						<pre><code>&lt;script type="text/javascript" src="https://cloud.apizee.com/contactBox/loaderIzeeChat.js"/&gt;</code><br /><code>&lt;script type="text/javascript"/&gt;</code><br/><code id="code"></code><br/><code>&lt;/script&gt;</code></pre>
+					</div>
+					<button id="hideForm" class="hideOnBackground btn btn-primary">
+						Hide Form
+					</button>
+				</div>
+			</div>
+			<script>
+				const toBase64 = (file) =>
+					new Promise((resolve, reject) => {
+						const reader = new FileReader();
+						reader.readAsDataURL(file);
+						reader.onload = () => resolve(reader.result);
+						reader.onerror = (error) => reject(error);
+					});
+				const upFile = async () => {
+					const file = document.querySelector('#background').files[0];
+					const bg = await toBase64(file);
+					$('#body').css({ 'background-image': 'url(' + bg + ')' });
+					console.log('BACKGROUND', bg);
+				};
+				$(document).ready(function($) {
+					const siteKey =
+						_get('siteKey') !== undefined && _get('siteKey') !== 'undefined'
+							? _get('siteKey')
+							: '';
+					const textCode = 'loaderIzeeChat("' + siteKey + '");';
+					$('#code').text(textCode);
+					loaderIzeeChat(siteKey);
+					$('#hideForm').click(function() {
+						$('.hideOnBackground').hide();
+						$('.showOnBackground').show();
+					});
+					$('#showForm').click(function() {
+						$('.hideOnBackground').show();
+						$('.showOnBackground').hide();
+					});
+					$('#apply').click(function() {
+						upFile();
+						$('.hideOnBackground').hide();
+						$('.showOnBackground').show();
+					});
+				});
+			</script>
+		</div>
+		<script
+			type="text/javascript"
+			src="https://cloud.apizee.com/contactBox/loaderIzeeChat.js"
+		></script>
+
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/js/tuto.js"></script>
+	</body>
+</html>
