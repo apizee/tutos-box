@@ -33,9 +33,24 @@
 			<div class="row">
 				<div class="col">
 					<div class="form-group">
-						<button class="btn btn-call" id="call-button" disabled="disabled">
-							CALL
-						</button>
+						<p style="text-align:center">
+							<button
+								class="btn btn-call btn-primary"
+								id="audio-call-button"
+								disabled="disabled"
+							>
+								AUDIO CALL
+							</button>
+						</p>
+						<p style="text-align:center">
+							<button
+								class="btn btn-call btn-primary"
+								id="video-call-button"
+								disabled="disabled"
+							>
+								VIDEO CALL
+							</button>
+						</p>
 					</div>
 				</div>
 				<div class="col">
@@ -43,8 +58,10 @@
 						<div class="form-group">
 							<label for="customVisitorData">Code</label>
 							<pre><code>&lt;style&gt;</code><br /><code>#comBoxAll{display:none}</code><br /><code>&lt;/style&gt;</code><br /><code>&lt;script&gt;</code><code>
-const buttonId= 'call-button';
-const clickButton = document.getElementById(buttonId);
+const videoButtonId= 'video-call-button';
+const videoClickButton = document.getElementById(videoButtonId);
+const audioButtonId= 'audio-call-button';
+const audioClickButton = document.getElementById(audioButtonId);
 //callback from box
 const applicationCallback = function(contactBox, type, params) {
     switch (type) {
@@ -52,21 +69,26 @@ const applicationCallback = function(contactBox, type, params) {
             console.info('[ComBox] init', params);
         break;
         case 'newAgentSelected':
-            clickButton.removeAttribute('disabled');
+			videoClickButton.removeAttribute('disabled');
+            audioClickButton.removeAttribute('disabled');
         break;
         case 'noAgentAvailable':
-            clickButton.setAttribute('disabled',false);
+			videoClickButton.setAttribute('disabled',false);
+			audioClickButton.setAttribute('disabled',false);
         break;
+		case 'callBreak':
+			closeBox();
+			break;
     }
 };
 
 // box loader params
-    const customParam = {
-        applicationCallback:applicationCallback
+const customParam = {
+    applicationCallback:applicationCallback
 };
 
 //video call function
-    const call = () =>{
+const callVideo = () =>{
     let contactBox = Apizee.getContactBox();
     let box = Apizee.getComBox();
     if(box && contactBox){
@@ -74,7 +96,15 @@ const applicationCallback = function(contactBox, type, params) {
         box.callVideo(contactBox.publishedAgentId);
     }
 }
-
+//audio call function
+const callAudio = () =>{
+    let contactBox = Apizee.getContactBox();
+    let box = Apizee.getComBox();
+    if(box && contactBox){
+        document.getElementById('comBoxAll').style.display='block';
+        box.callAudio(contactBox.publishedAgentId);
+    }
+}
 // close/ hide box
 const closeBox = ()=>{
     let contactBox = Apizee.getContactBox();
@@ -86,7 +116,8 @@ const closeBox = ()=>{
 };
 
 //link call button to call function
-clickButton.onclick = call;
+videoClickButton.onclick = callVideo;
+audioClickButton.onclick = callAudio;
 
 // load box
 </code><code id="loaderCode">
@@ -101,21 +132,27 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;script&gt;</co
 						_get('siteKey') !== undefined && _get('siteKey') !== 'undefined'
 							? _get('siteKey')
 							: 'YOUR_SITE_KEY';
-					const buttonId = 'call-button';
-					const clickButton = document.getElementById(buttonId);
+					const videoButtonId = 'video-call-button';
+					const videoClickButton = document.getElementById(videoButtonId);
+					const audioButtonId = 'audio-call-button';
+					const audioClickButton = document.getElementById(audioButtonId);
 					$('#loaderCode').html('loaderIzeeChat("' + siteKey + '",customParam);');
 					//callback from box
 					const applicationCallback = function(contactBox, type, params) {
 						switch (type) {
 							case 'init':
 								console.info('[ComBox] init', params);
-
 								break;
 							case 'newAgentSelected':
-								clickButton.removeAttribute('disabled');
+								videoClickButton.removeAttribute('disabled');
+								audioClickButton.removeAttribute('disabled');
 								break;
 							case 'noAgentAvailable':
-								clickButton.setAttribute('disabled', false);
+								videoClickButton.setAttribute('disabled', false);
+								audioClickButton.setAttribute('disabled', false);
+								break;
+							case 'callBreak':
+								closeBox();
 								break;
 						}
 					};
@@ -126,16 +163,23 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;script&gt;</co
 					};
 
 					//video call function
-					const call = () => {
+					const callVideo = () => {
 						let contactBox = Apizee.getContactBox();
 						let box = Apizee.getComBox();
-
 						if (box && contactBox) {
 							document.getElementById('comBoxAll').style.display = 'block';
 							box.callVideo(contactBox.publishedAgentId);
 						}
 					};
-
+					//audio call function
+					const callAudio = () => {
+						let contactBox = Apizee.getContactBox();
+						let box = Apizee.getComBox();
+						if (box && contactBox) {
+							document.getElementById('comBoxAll').style.display = 'block';
+							box.callAudio(contactBox.publishedAgentId);
+						}
+					};
 					// close/ hide box
 					const closeBox = () => {
 						let contactBox = Apizee.getContactBox();
@@ -147,7 +191,9 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;script&gt;</co
 					};
 
 					//link call button to call function
-					clickButton.onclick = call;
+					videoClickButton.onclick = callVideo;
+					audioClickButton.onclick = callAudio;
+					customParam.useFrame = false;
 					// load box
 					loaderIzeeChat(siteKey, customParam);
 				});
