@@ -79,6 +79,9 @@ const applicationCallback = function(contactBox, type, params) {
 		case 'callBreak':
 			closeBox();
 			break;
+		case "callEnd":
+			closeBox();
+			break;
     }
 };
 
@@ -152,6 +155,9 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 								audioClickButton.setAttribute('disabled', false);
 								break;
 							case 'callBreak':
+								closeBox();
+								break;
+							case 'callEnd':
 								closeBox();
 								break;
 						}
