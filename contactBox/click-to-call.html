@@ -184,12 +184,20 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 								videoClickButton.removeAttribute('disabled');
 								audioClickButton.removeAttribute('disabled');
 								break;
+							case 'callRecept':
+								console.info('[ComBox] callRecept', params);
+								document.getElementById('comBoxAll').style.display = 'block';
+								break;
 							case 'noAgentAvailable':
 								console.info('[ComBox] noAgentAvailable', params);
 								if (!contactBox.highTrafficMode) {
 									videoClickButton.setAttribute('disabled', false);
 									audioClickButton.setAttribute('disabled', false);
 								}
+								break;
+							case 'chat_req_close':
+								console.info('[ComBox] chat_req_close', params);
+								document.getElementById('comBoxAll').style.display = 'block';
 								break;
 							case 'callBreak':
 								closeBox();
@@ -249,7 +257,7 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 						let box = Apizee.getComBox();
 						if (box && contactBox) {
 							document.getElementById('comBoxAll').style.display = 'none';
-							box.close(contactBox.publishedAgentId);
+							box.minimize(contactBox.publishedAgentId);
 						}
 					};
 
