@@ -210,6 +210,9 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 							case 'callBreak':
 								closeBox();
 								break;
+							case 'chat_req_close':
+								document.getElementById('comBoxAll').style.display = 'block';
+								break;
 							case 'callEnd':
 								closeBox();
 								break;
@@ -273,9 +276,13 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 					videoClickButton.onclick = callVideo;
 					audioClickButton.onclick = callAudio;
 					customParam.useFrame = false;
+					//customParam.template = 'modern-visio';
+					//customParam.serverDomainRoot = 'https://cloud.apizee.com/';
 					// load box
+
 					loaderIzeeChat(siteKey, customParam);
 				});
+				//var devLocal = true;
 			</script>
 		</div>
 		<script
