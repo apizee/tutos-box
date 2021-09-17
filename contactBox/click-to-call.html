@@ -107,6 +107,7 @@ const applicationCallback = function(contactBox, type, params) {
 const customParam = {
 	applicationCallback: applicationCallback,
 };
+//custom box event message handler
 const receiveData = (e)=>{
 	const data = = e.detail.data;
 	switch (data.event) {
@@ -225,6 +226,7 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 					const customParam = {
 						applicationCallback: applicationCallback,
 					};
+					//custom box event message handler
 					const receiveData = (e) => {
 						const data = e.detail.data;
 						switch (data.event) {
