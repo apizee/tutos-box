@@ -72,6 +72,7 @@ const applicationCallback = function(contactBox, type, params) {
 				videoClickButton.removeAttribute('disabled');
 				audioClickButton.removeAttribute('disabled');
 			}
+			apiRTC.addEventListener('receiveData', receiveData);
 			break;
 		case 'newAgentSelected':
 			console.info('[ComBox] new agent selected', params);
@@ -89,16 +90,7 @@ const applicationCallback = function(contactBox, type, params) {
 				audioClickButton.setAttribute('disabled', false);
 			}
 			break;
-		case 'chat_req_close':
-			const agentId= Apizee.getContactBox().publishedAgentId;
-			console.info('[ComBox] chat_req_close', params);
-			//document.getElementById('comBoxAll').style.display = 'block';
-			Apizee.getComBox().dataClient.sendData(agentId, {
-				event: 'chat_ans_close',
-				answer: 'refuse',
-			});
-			Apizee.getComBox().sendInfoMsg(agentId,'On click to call mode, you can\'t ask end discussion');
-			break;
+
 		case 'callBreak':
 			closeBox();
 			break;
@@ -115,7 +107,14 @@ const applicationCallback = function(contactBox, type, params) {
 const customParam = {
 	applicationCallback: applicationCallback,
 };
-
+const receiveData = (e)=>{
+	const data = = e.detail.data;
+	switch (data.event) {
+		case 'chat_req_close':
+			document.getElementById('comBoxAll').style.display = 'block';
+		break;
+	}
+}
 //video call function
 const callVideo = () => {
 	let contactBox = Apizee.getContactBox();
@@ -192,6 +191,7 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 									videoClickButton.removeAttribute('disabled');
 									audioClickButton.removeAttribute('disabled');
 								}
+								apiRTC.addEventListener('receiveData', receiveData);
 								break;
 							case 'newAgentSelected':
 								console.info('[ComBox] new agent selected', params);
@@ -209,17 +209,6 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 									audioClickButton.setAttribute('disabled', false);
 								}
 								break;
-							case 'chat_req_close':
-								console.info('[ComBox] chat_req_close', params);
-								Apizee.getComBox().dataClient.sendData(agentId, {
-									event: 'chat_ans_close',
-									answer: 'refuse',
-								});
-								Apizee.getComBox().sendInfoMsg(
-									agentId,
-									"On click to call mode, you can't ask end discussion"
-								);
-								break;
 							case 'callBreak':
 								closeBox();
 								break;
@@ -236,7 +225,14 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 					const customParam = {
 						applicationCallback: applicationCallback,
 					};
-
+					const receiveData = (e) => {
+						const data = e.detail.data;
+						switch (data.event) {
+							case 'chat_req_close':
+								document.getElementById('comBoxAll').style.display = 'block';
+								break;
+						}
+					};
 					//video call function
 					const callVideo = () => {
 						let contactBox = Apizee.getContactBox();
