@@ -90,8 +90,14 @@ const applicationCallback = function(contactBox, type, params) {
 			}
 			break;
 		case 'chat_req_close':
+			const agentId= Apizee.getContactBox().publishedAgentId;
 			console.info('[ComBox] chat_req_close', params);
-			document.getElementById('comBoxAll').style.display = 'block';
+			//document.getElementById('comBoxAll').style.display = 'block';
+			Apizee.getComBox().dataClient.sendData(agentId, {
+				event: 'chat_ans_close',
+				answer: 'refuse',
+			});
+			Apizee.getComBox().sendInfoMsg(agentId,'On click to call mode, you can\'t ask end discussion');
 			break;
 		case 'callBreak':
 			closeBox();
@@ -205,7 +211,14 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 								break;
 							case 'chat_req_close':
 								console.info('[ComBox] chat_req_close', params);
-								document.getElementById('comBoxAll').style.display = 'block';
+								Apizee.getComBox().dataClient.sendData(agentId, {
+									event: 'chat_ans_close',
+									answer: 'refuse',
+								});
+								Apizee.getComBox().sendInfoMsg(
+									agentId,
+									"On click to call mode, you can't ask end discussion"
+								);
 								break;
 							case 'callBreak':
 								closeBox();
