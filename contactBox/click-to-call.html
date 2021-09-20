@@ -78,9 +78,10 @@ const receiveData = (e)=>{ //custom box event message handler
 					.getComBoxEl(e.detail.senderId)
 					.find('div.endDiscussionRequest')
 					.remove();
+				closeBox();
 			}
 		);
-			Apizee.getComBox().sendInfoMsg(e.detail.senderId, 'End discussion is not available on click to call integration');
+		Apizee.getComBox().sendInfoMsg(e.detail.senderId, 'End discussion is not available on click to call integration');
 		break;
 	}
 };
@@ -215,6 +216,7 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 											.getComBoxEl(e.detail.senderId)
 											.find('div.endDiscussionRequest')
 											.remove();
+										closeBox();
 									}
 								);
 								Apizee.getComBox().sendInfoMsg(
