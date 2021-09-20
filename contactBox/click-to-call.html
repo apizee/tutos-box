@@ -63,15 +63,6 @@ const videoClickButton = document.getElementById(videoButtonId);
 const audioButtonId = 'audio-call-button';
 const audioClickButton = document.getElementById(audioButtonId);
 
-const receiveData = (e)=>{ //custom box event message handler
-	const data = = e.detail.data;
-	switch (data.event) {
-		case 'chat_req_close':
-			document.getElementById('comBoxAll').style.display = 'block';
-		break;
-	}
-};
-
 //callback from box
 const applicationCallback = function(contactBox, type, params) {
 	switch (type) {
@@ -81,7 +72,8 @@ const applicationCallback = function(contactBox, type, params) {
 				videoClickButton.removeAttribute('disabled');
 				audioClickButton.removeAttribute('disabled');
 			}
-			apiRTC.addEventListener('receiveData', receiveData);
+			Apizee.getContactBox().params.enableEndDiscussion = false;
+			Apizee.getComBox().params.enableEndDiscussion = false;
 			break;
 		case 'newAgentSelected':
 			console.info('[ComBox] new agent selected', params);
@@ -183,16 +175,7 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 					const videoClickButton = document.getElementById(videoButtonId);
 					const audioButtonId = 'audio-call-button';
 					const audioClickButton = document.getElementById(audioButtonId);
-					//custom box event message handler
-					const receiveData = (e) => {
-						console.log('Receive data tutorial', e);
-						const data = e.detail.data;
-						switch (data.event) {
-							case 'chat_req_close':
-								document.getElementById('comBoxAll').style.display = 'block';
-								break;
-						}
-					};
+
 					$('#loaderCode').html('loaderIzeeChat("' + siteKey + '",customParam);');
 					//callback from box
 					const applicationCallback = function(contactBox, type, params) {
@@ -203,7 +186,8 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 									videoClickButton.removeAttribute('disabled');
 									audioClickButton.removeAttribute('disabled');
 								}
-								apiRTC.addEventListener('receiveData', receiveData);
+								Apizee.getContactBox().params.enableEndDiscussion = false;
+								Apizee.getComBox().params.enableEndDiscussion = false;
 								break;
 							case 'newAgentSelected':
 								console.info('[ComBox] new agent selected', params);
