@@ -63,6 +63,28 @@ const videoClickButton = document.getElementById(videoButtonId);
 const audioButtonId = 'audio-call-button';
 const audioClickButton = document.getElementById(audioButtonId);
 
+const receiveData = (e)=>{ //custom box event message handler
+	const data = = e.detail.data;
+	switch (data.event) {
+		case 'chat_req_close':
+		Apizee.getComBox().dataClient.sendData(
+			e.detail.senderId,
+			{
+				event: 'chat_ans_close',
+				answer: 'refuse',
+			},
+			function () {
+				Apizee.getComBox()
+					.getComBoxEl(e.detail.senderId)
+					.find('div.endDiscussionRequest')
+					.remove();
+			}
+		);
+			Apizee.getComBox().sendInfoMsg(e.detail.senderId, 'End discussion is not available on click to call integration');
+		break;
+	}
+};
+
 //callback from box
 const applicationCallback = function(contactBox, type, params) {
 	switch (type) {
@@ -72,8 +94,9 @@ const applicationCallback = function(contactBox, type, params) {
 				videoClickButton.removeAttribute('disabled');
 				audioClickButton.removeAttribute('disabled');
 			}
-			Apizee.getContactBox().params.enableEndDiscussion = false;
-			Apizee.getComBox().params.enableEndDiscussion = false;
+			if (apiRTC) {
+				apiRTC.addEventListener('receiveData', receiveData);
+			}
 			break;
 		case 'newAgentSelected':
 			console.info('[ComBox] new agent selected', params);
@@ -175,7 +198,32 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 					const videoClickButton = document.getElementById(videoButtonId);
 					const audioButtonId = 'audio-call-button';
 					const audioClickButton = document.getElementById(audioButtonId);
-
+					//custom box event message handler
+					const receiveData = (e) => {
+						console.log('Receive data tutorial', e);
+						const data = e.detail.data;
+						switch (data.event) {
+							case 'chat_req_close':
+								Apizee.getComBox().dataClient.sendData(
+									e.detail.senderId,
+									{
+										event: 'chat_ans_close',
+										answer: 'refuse',
+									},
+									function() {
+										Apizee.getComBox()
+											.getComBoxEl(e.detail.senderId)
+											.find('div.endDiscussionRequest')
+											.remove();
+									}
+								);
+								Apizee.getComBox().sendInfoMsg(
+									e.detail.senderId,
+									'End discussion is not available on click to call integration'
+								);
+								break;
+						}
+					};
 					$('#loaderCode').html('loaderIzeeChat("' + siteKey + '",customParam);');
 					//callback from box
 					const applicationCallback = function(contactBox, type, params) {
@@ -186,8 +234,9 @@ loaderIzeeChat("YOUR_SITE_KEY",customParam);</code><br/><code>&lt;/script&gt;</c
 									videoClickButton.removeAttribute('disabled');
 									audioClickButton.removeAttribute('disabled');
 								}
-								Apizee.getContactBox().params.enableEndDiscussion = false;
-								Apizee.getComBox().params.enableEndDiscussion = false;
+								if (apiRTC) {
+									apiRTC.addEventListener('receiveData', receiveData);
+								}
 								break;
 							case 'newAgentSelected':
 								console.info('[ComBox] new agent selected', params);
