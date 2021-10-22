@@ -68,7 +68,9 @@
 					let visitorData =
 						'{"pageLocation":"https://apizee.com/","title":"Custom Visitor Data - tutorial"}';
 					if (_get('customVisitorData') !== undefined) {
-						visitorData = decodeURIComponent(_get('customVisitorData'));
+						visitorData = decodeURIComponent(
+							_get('customVisitorData').replace(/\+/g, '%20')
+						);
 					}
 					$('#customVisitorData').val(visitorData);
 					let textCode = 'const customVisitorData = ' + visitorData + '\n';
