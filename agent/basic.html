@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="robots" content="noindex, nofollow" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../assets/css/doc.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<title>Apizee - [Agent] Simple integration</title>
+		<style>
+			body,
+			html {
+				background-repeat: no-repeat;
+				background-size: cover;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+			}
+			.showOnBackground {
+				display: none;
+			}
+		</style>
+		<style id="styleHead">
+			#comBoxAll .comBoxBanner {
+				background: #333333 !important;
+			}
+			#comBoxAll .comBox {
+				border-color: #333333 !important;
+			}
+			#comBoxAll .comBox .comBoxHeader {
+				background: #333333 !important;
+			}
+			#comBoxAll .comBox .comBoxHeaderClose {
+				background: #333333 !important;
+			}
+			#comBoxAll .comBox .comBoxSendMessage {
+				background-color: #333333 !important;
+			}
+		</style>
+	</head>
+	<body id="body">
+		<div id="menu" class="hideOnBackground"></div>
+		<button id="showForm" class="showOnBackground btn btn-primary">Show Form</button>
+		<div class="container hideOnBackground" id="applyBg">
+			<h1>Simple agent box integration - tutorial</h1>
+			<div class="card">
+				<div class="card-body">Simple agent box integration</div>
+			</div>
+			<div class="row" id="mySites" style="display: none">
+				<div class="col">
+					<h4 class="text-success">
+						You are connected,click on one of this link to communicate
+					</h4>
+					<div id="sitesList"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div id="divLogin">
+						Please connect with your Apizee account:
+						<div class="form-group">
+							<label for="username">Login:</label>
+							<input type="text" id="username" name="username" class="form-control" />
+						</div>
+						<div class="form-group">
+							<label for="mdp">Password:</label>
+							<input type="password" id="mdp" name="mdp" class="form-control" />
+						</div>
+						<div class="form-group">
+							<button id="signin" class="btn btn-primary">Connect</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="color">Change Box color</label>
+						<div class="input-group mb-3">
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Color key"
+								aria-label="Color key"
+								id="color"
+								name="color"
+								value="#333333"
+							/>
+							<div class="input-group-append">
+								<input
+									class="btn btn-outline-success"
+									type="button"
+									id="apply"
+									value="Apply"
+								/>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="customVisitorData">Example</label>
+						<pre><br/><code id="styleCode"></code><br/><code>&lt;script type="text/javascript" src="https://cloud.apizee.com/agent/loaderAgent.js"/&gt;</code><br /><code>&lt;script type="text/javascript"/&gt;</code><br/><code id="code">
+	let instanceAgent;
+	const serverDomainRoot = "https://cloud.apizee.com/";
+	let apiCCkey = null;
+	let userInfos = {};
+	let useFrame = true;
+	let agentAppCallback = function (agent, type, params) {
+		switch (type) {
+			case "init":
+				console.log("Agent is loaded");
+				break;
+		}
+	};
+	let agentParams = {
+		directory: true, // if true :print widget with availables agent
+		directoryStartOpen: true,
+		template: "agent-modern",
+		useDefaultTheme: false,
+	};
+	const username = "My username"; // SET YOUR USERNAME HERE
+	const password = "My password"; // SET YOUR PASSWORD HERE
+	$.ajax({
+		type: "POST",
+		url: serverDomainRoot + "api/token",
+		xhr: function () {
+			var xhr = new window.XMLHttpRequest();
+			return xhr;
+		},
+		data: {
+			grant_type: "password",
+			username: username,
+			password: password,
+		},
+	}).done(function (data) {
+		$.ajax({
+			type: "GET",
+			url: serverDomainRoot + "api/v2/users/me",
+			xhr: function () {
+			const xhr = new window.XMLHttpRequest();
+				return xhr;
+			},
+			headers: {
+				Authorization: "Bearer " + data.access_token,
+			},
+		}).done(function (user) {
+			console.log("users/me : Done !");
+			userInfos.id = user.userId;
+			userInfos.enterpriseId = user.enterpriseId;
+			userInfos.token = user.token;
+			userInfos.photoUrl = "https:" + user.photo_url;
+			userInfos.nickname = user.nickname;
+			userInfos.mail = username;
+			loadAgent(
+				serverDomainRoot,
+				user.apiKey,
+				userInfos,
+				agentAppCallback,
+				useFrame,
+				agentParams
+			);
+		});
+	});
+						</code><br/><code>&lt;/script&gt;</code></pre>
+					</div>
+				</div>
+			</div>
+			<script>
+				let instanceAgent;
+				const serverDomainRoot = 'https://cloud.apizee.com/';
+				let apiCCkey = null;
+				let userInfos = {};
+				let useFrame = true;
+				let agentAppCallback = function (agent, type, params) {
+					switch (type) {
+						case 'init':
+							console.log('Agent is loaded');
+							break;
+					}
+				};
+				let agentParams = {
+					directory: true,
+					directoryStartOpen: true,
+					template: 'agent-modern',
+					useDefaultTheme: false,
+				};
+				$('#signin').click(function () {
+					console.log('click on Sign in');
+					var username = document.getElementById('username').value;
+					var password = document.getElementById('mdp').value;
+					userInfos.username = username;
+					$.ajax({
+						type: 'POST',
+						url: serverDomainRoot + 'api/token',
+						xhr: function () {
+							var xhr = new window.XMLHttpRequest();
+							return xhr;
+						},
+						data: {
+							grant_type: 'password',
+							username: username,
+							password: password,
+						},
+					}).done(function (data) {
+						$.ajax({
+							type: 'GET',
+							url: serverDomainRoot + 'api/v2/users/me',
+							xhr: function () {
+								var xhr = new window.XMLHttpRequest();
+								return xhr;
+							},
+							headers: {
+								Authorization: 'Bearer ' + data.access_token,
+							},
+						}).done(function (user) {
+							console.log('users/me : Done !');
+							userInfos.id = user.userId;
+							userInfos.enterpriseId = user.enterpriseId;
+							userInfos.token = user.token;
+							userInfos.photoUrl = 'https:' + user.photo_url;
+							userInfos.nickname = user.nickname;
+							userInfos.mail = username;
+
+							$.ajax({
+								type: 'GET',
+								url: serverDomainRoot + `/api/services`,
+								xhr: function () {
+									var xhr = new window.XMLHttpRequest();
+									return xhr;
+								},
+								headers: {
+									Authorization: 'Bearer ' + user.token,
+								},
+							}).done(function (sites) {
+								let sitesList = '';
+								console.log(sites.data);
+								if (sites.data) {
+									for (let i = 0; i <= sites.data.length; i++) {
+										if (sites.data[i] && sites.data[i].type == 'chatbox') {
+											sitesList +=
+												'<a href="https://apizee.github.io/tutos-box/contactBox/simple-integration.html?siteKey=' +
+												sites.data[i].key +
+												'" target="blank">' +
+												sites.data[i].name +
+												'</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+										}
+										document.getElementById('sitesList').innerHTML = sitesList;
+									}
+								}
+							});
+
+							loadAgent(
+								serverDomainRoot,
+								user.apiKey,
+								userInfos,
+								agentAppCallback,
+								useFrame,
+								agentParams
+							);
+							console.log('USERID  : ' + userInfos.id);
+							console.log('Registration OK');
+							document.getElementById('divLogin').style.display = 'none';
+							document.getElementById('mySites').style.display = 'block';
+							document.getElementById('user').innerHTML += user.nickname;
+						});
+					});
+					var css =
+						'#comBoxAll .comBoxBanner{ background: blue !important;}\n#comBoxAll .comBox{ border-color: blue !important;}\n#comBoxAll .comBox .comBoxHeader{ background: blue !important;}\n#comBoxAll .comBox .comBoxHeaderClose{ background:blue !important;}\n#comBoxAll .comBox .comBoxSendMessage { background-color:blue !important;}\n';
+					var modifyCss = css;
+					$('#code').html(modifyCss.replaceAll('blue', $('#color').val()));
+					$('#apply').click(function () {
+						modifyCss = css;
+						const finalCSS = modifyCss.replaceAll('blue', $('#color').val());
+						$('#styleHead').html(finalCSS);
+						$('#styleCode').html(finalCSS);
+					});
+				});
+			</script>
+		</div>
+		<script type="text/javascript" src="https://cloud.apizee.com/agent/loaderAgent.js"></script>
+
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/js/tuto.js"></script>
+	</body>
+</html>
